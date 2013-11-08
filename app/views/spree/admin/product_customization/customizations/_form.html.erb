@@ -1,0 +1,40 @@
+<div data-hook="admin_customization_form_fields" class="align-center">
+  <div class="row row1">
+    <div class="alpha eight columns">
+      <%= f.field_container :name do %>
+        <%= f.label :name, Spree.t(:name) %> <span class="required">*</span><br />
+        <%= f.text_field :name, :class => "fullwidth" %>
+        <%= f.error_message_on :name %>
+      <% end %>
+    </div>
+
+    <div class="omega eight columns">
+      <%= f.field_container :presentation do %>
+        <%= f.label :presentation, Spree.t(:presentation) %> <span class="required">*</span><br />
+        <%= f.text_field :presentation, :class => "fullwidth" %>
+        <%= f.error_message_on :presentation %>
+      <% end %>
+    </div>
+  </div>
+
+  <% if f.object.new_record? %>
+  <div class="row row2">
+    <div class="alpha eight columns">
+      <%= f.field_container :customization_type do %>
+        <%= f.label :customization_type, Spree.t(:customization_type) %> <span class="required">*</span><br />
+        <%= f.select :customization_type, Spree::ProductCustomization::Types.types.map{|t| [t.type_name, t.name]}, {:include_blank => false}, :class => "fullwidth select2"  %>
+        <%= f.error_message_on :customization_type %>
+      <% end %>
+    </div>
+
+    <div class="alpha eight columns">
+      <%= f.field_container :predefined_values do %>
+        <%= f.label :predefined_values, Spree.t(:predefined_values) %> <span class="required">*</span><br />
+        <%= f.check_box :predefined_values %>
+        <%= f.error_message_on :predefined_values %>
+      <% end %>
+    </div>
+  </div>
+  <% end %>
+
+</div>

@@ -1,0 +1,12 @@
+<tr class="option_value fields" id="spree_<%= dom_id(f.object) %>"  data-hook="value" class="<%= cycle('odd', 'even')%>">
+  <%= f.hidden_field :id, data: {field: :id} %>
+  <%= f.fields_for :values, [] do |ff| %>
+    <% f.object.customization.customizer.fields.each do |field| %>
+      <td class="<%=field%>"><%= ff.text_field field, value: (f.object.values||{})[field]||'1' %></td>
+    <% end %>
+  <% end %>
+  <td class="actions">
+    <%= link_to_with_icon('icon-trash', "", "#", :title => Spree.t(:remove), :class => "spree_remove_nested_record no-text with-tip" ) %>
+    <%= f.hidden_field :_destroy, data: {field: :destroy} %>
+  </td>
+</tr>

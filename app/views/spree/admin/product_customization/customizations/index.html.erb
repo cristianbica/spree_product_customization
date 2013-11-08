@@ -1,0 +1,47 @@
+<% content_for :page_title do %>
+  <%= Spree.t("product_customization/customizations") %>
+<% end %>
+
+<% content_for :page_actions do %>
+  <li id="new_pc_link">
+    <%= button_link_to Spree.t(:new_customization), new_admin_product_customization_customization_url, { :remote => false, :icon => 'icon-plus', :id => 'new_customization_link' } %>
+  </li>
+<% end %>
+
+<%= render :partial => 'spree/admin/shared/product_sub_menu' %>
+
+<div id="new_customization"></div>
+
+<% if @customizations.any? %>
+<table class="index" id="listing_customizations" data-hook>
+  <colgroup>
+    <col style="width: 45%">
+    <col style="width: 40%">
+    <col style="width: 15%">
+  </colgroup>
+  <thead>
+    <tr data-hook="option_header">
+      <th><%= Spree.t(:name) %></th>
+      <th><%= Spree.t(:presentation) %></th>
+      <th class="actions"></th>
+    </tr>
+  </thead>
+  <tbody>
+    <% @customizations.each do |customization| %>
+      <tr class="spree_customization <%= cycle('odd', 'even')%>" id="<%= spree_dom_id customization %>" data-hook="option_row">
+        <td class="align-center"><%= customization.name %></td>
+        <td class="align-center presentation"><%= customization.presentation %></td>
+        <td class="actions">
+          <%= link_to_with_icon('icon-edit', Spree.t(:edit), edit_admin_product_customization_customization_url(customization), :class => 'admin_edit_customization', :no_text => true, :action => 'edit') %>
+          <%= link_to_delete(customization, :no_text => true, url: admin_product_customization_customization_url(customization)) %>
+        </td>
+      </tr>
+    <% end %>
+  </tbody>
+</table>
+<% else %>
+  <div class="no-objects-found">
+    <%= Spree.t(:no_resource_found, resource: I18n.t(:other, scope: 'activerecord.models.spree/product_customization/customizations')) %>,
+    <%= link_to Spree.t(:add_one), spree.new_admin_product_customization_customization_path %>!
+  </div>
+<% end %>

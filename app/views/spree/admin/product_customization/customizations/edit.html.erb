@@ -1,0 +1,46 @@
+<%= render :partial => 'spree/admin/shared/product_sub_menu' %>
+
+<% content_for :page_title do %>
+  <%= Spree.t(:editing_customization) %> <span class="green">"<%= @customization.name %>"</span>
+<% end %>
+
+<% content_for :page_actions do %>
+  <li>
+    <span id="new_add_value" data-hook>
+      <%= link_to_add_fields Spree.t(:add_value), "tbody#values", :class => 'button icon-plus' %>
+    </span>
+  </li>
+  <li>
+    <%= button_link_to Spree.t(:back_to_customizations_list), spree.admin_product_customization_customizations_path, :icon => 'icon-arrow-left' %>
+  </li>
+<% end %>
+
+<%= render :partial => 'spree/shared/error_messages', :locals => { :target => @customization } %>
+
+<%= form_for [:admin, @customization], as: :customization do |f| %>
+  <fieldset>
+    <legend align="center"><%= Spree.t(:option_values) %></legend>
+
+    <%= render :partial => 'form', :locals => { :f => f } %>
+    <% if @customization.predefined_values? %>
+    <h5><%= Spree.t(:values) %></h5>
+    <table class="index sortable" data-hook>
+      <thead data-hook="option_header">
+        <tr>
+          <% @customization.customizer.fields.each do |field| %>
+          <th><%= Spree.t(field) %></th>
+          <% end %>
+          <th class="actions"></th>
+        </tr>
+      </thead>
+      <tbody id="values">
+        <%= f.fields_for :values do |value_form| %>
+          <%= render :partial => 'value_fields', :locals => { :f => value_form } %>
+        <% end %>
+      </tbody>
+    </table>
+    <% end %>
+
+    <%= render :partial => 'spree/admin/shared/edit_resource_links' %>
+  </fieldset>
+<% end %>

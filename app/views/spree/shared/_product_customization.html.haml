@@ -1,0 +1,7 @@
+#product-customization.validatable.invalid
+  .title=product.customization.presentation
+  =hidden_field_tag :customization
+  - if product.customization.predefined_values?
+    =select_tag :customization_value, options_from_collection_for_select(product.customization.values, :presentation, :presentation), id: :predefined_customizations
+  - else
+    =render partial: "spree/shared/product_customization_#{product.customization.customizer.name.split("::").last.underscore}"
