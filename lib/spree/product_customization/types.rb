@@ -3,7 +3,7 @@ module Spree
     module Types
 
       mattr_accessor :types
-      self.types = [Spree::ProductCustomization::Types::TShirt]
+      self.types = [Spree::ProductCustomization::Types::TShirt, Spree::ProductCustomization::Types::Short]
 
       def self.register_type(klass)
         self.types << klass
