@@ -4,8 +4,8 @@ module Spree
 
       class Base
 
-        cattr_accessor  :type_name
-        cattr_accessor  :fields
+        class_attribute  :type_name
+        class_attribute  :fields
 
       end
 
